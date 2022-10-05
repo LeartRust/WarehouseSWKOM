@@ -37,6 +37,8 @@ jobs:
         
  #Build's job
   build:
+    #Depends on test's job
+    needs: tests
     #Depends on sonar's job
     #needs: sonar
     name: Build
