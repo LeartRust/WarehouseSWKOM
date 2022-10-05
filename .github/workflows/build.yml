@@ -74,6 +74,8 @@ jobs:
           path: target/openapi-spring-1.22.1.jar
 #Deploy's job
   deploy:
+  #Depends on build's job
+    needs: build
     name: Deploy
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
