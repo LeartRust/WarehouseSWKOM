@@ -1,7 +1,16 @@
+#Workflow name
+name: CD
+on:
+  #Manually trigger workflow runs
+  workflow_dispatch:
+  #Trigger the workflow when Master CI finishes
+  workflow_run:
+    workflows: ["Master CI"]
+    types:
+      - completed
+jobs:
 #Deploy's job
   deploy:
-    #Depends on build's job
-    needs: build
     name: Deploy
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
