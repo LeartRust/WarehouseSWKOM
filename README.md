@@ -1,3 +1,5 @@
+AUFRUF ÜBER http://localhost:5000
+
 # OpenAPI generated server
 
 Spring Boot Server
