@@ -1,5 +1,8 @@
 AUFRUF ÜBER http://localhost:5000
 
+Validation Codes überprüfen
+https://regex101.com
+
 # OpenAPI generated server
 
 Spring Boot Server
