@@ -1,7 +1,7 @@
 package at.fhtw.swen3.services.impl;
 
 
-import at.fhtw.swen3.services.ParcelApi;
+import at.fhtw.swen3.controller.ParcelApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.request.NativeWebRequest;

@@ -1,21 +1,21 @@
-package at.fhtw.swen3.persistence.entity;
+package at.fhtw.swen3.persistence.entities;
+
 
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class WarehouseEntity {
+public class WarehouseNextHopsEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(nullable = false)
     private int id;
     //@Column
-    private Integer level;
-    @OneToMany
-    @NotNull(message ="nextHops cannot be NULL")
-    private List<WarehouseNextHopsEntity> nextHops;
+    private Integer traveltimeMins;
+    @OneToOne
+    @NotNull(message ="hop cannot be NULL")
+    private HopEntity hop;
 }
