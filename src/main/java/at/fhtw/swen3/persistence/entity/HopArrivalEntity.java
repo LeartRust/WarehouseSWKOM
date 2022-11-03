@@ -14,14 +14,14 @@ import java.time.OffsetDateTime;
 @Entity
 public class HopArrivalEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Column(nullable = false)
     private int id;
-    @Column
+    //@Column
     @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$")
     private String code;
-    @Column
+    //@Column
     private String description;
-    @Column
+    //@Column
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @NotNull(message ="dateTime cannot be NULL")
     private OffsetDateTime dateTime;

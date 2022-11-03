@@ -15,28 +15,24 @@ public class ParcelEntity {
     //TODO ENUM wahrscheinlich falsch
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Column(nullable = false)
     private int id;
-    @Column
+    //@Column
     private String trackingId;
-    @Column
+    //@Column
     private TrackingInformation.StateEnum state;
-    @Column
     @OneToMany
     @NotNull(message ="visitedHops cannot be NULL")
     private List<HopArrivalEntity> visitedHops;
-    @Column
     @OneToMany
     @NotNull(message ="futureHops cannot be NULL")
     private List<HopArrivalEntity> futureHops;
-    @Column
+    //@Column
     @DecimalMin("0.0")
     private Float weight;
-    @Column
     @OneToOne
     @NotNull(message ="recipient cannot be NULL")
     private RecipientEntity recipient;
-    @Column
     @OneToOne
     @NotNull(message ="sender cannot be NULL")
     private RecipientEntity sender;

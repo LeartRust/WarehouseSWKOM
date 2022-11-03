@@ -11,11 +11,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class WarehouseNextHopsEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Column(nullable = false)
     private int id;
-    @Column
+    //@Column
     private Integer traveltimeMins;
-    @Column
     @OneToOne
     @NotNull(message ="hop cannot be NULL")
     private HopEntity hop;

@@ -11,11 +11,10 @@ import java.util.List;
 @Entity
 public class WarehouseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Column(nullable = false)
     private int id;
-    @Column
+    //@Column
     private Integer level;
-    @Column
     @OneToMany
     @NotNull(message ="nextHops cannot be NULL")
     private List<WarehouseNextHopsEntity> nextHops;

@@ -13,20 +13,20 @@ public class RecipientEntity {
     //TODO Validation Patterns überprüfen und ausbessern/ ONLY IF AUSTRIA?
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Column(nullable = false)
     private int id;
-    @Column
+    //@Column
     @Pattern(regexp = "^[A-Z]{1}[A-Za-z-]")
     private String name;
-    @Column
+    //@Column
     @Pattern(regexp = "^[A-Z]{1}[A-Za-z0-9\\/\\s]")
     private String street;
-    @Column
+    //@Column
     @Pattern(regexp = "^\\b(A-)[0-9]{4}")
     private String postalCode;
-    @Column
+    //@Column
     @Pattern(regexp = "^[A-Z]{1}[A-Za-z-]")
     private String city;
-    @Column
+    //@Column
     private String country;
 }

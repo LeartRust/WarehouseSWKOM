@@ -12,20 +12,19 @@ import javax.validation.constraints.Pattern;
 @Entity
 public class HopEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Column(nullable = false)
     private int id;
-    @Column
+    //@Column
     private String hopType;
-    @Column
+    //@Column
     @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$")
     private String code;
-    @Column
+    //@Column
     private String description;
-    @Column
+    //@Column
     private Integer processingDelayMins;
-    @Column
+    //@Column
     private String locationName;
-    @Column
     @OneToOne
     @NotNull(message ="locationCoordinates cannot be NULL")
     private GeoCoordinateEntity locationCoordinates;

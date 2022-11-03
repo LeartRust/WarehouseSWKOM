@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Entity
 public class ErrorEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
+    @Column(nullable = false)
     private int id;
-    @Column
+    //@Column
     private String errorMessage;
 }
