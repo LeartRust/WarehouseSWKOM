@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Home redirection to OpenAPI api documentation
  */
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class HomeController {
 

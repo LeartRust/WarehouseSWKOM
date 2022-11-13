@@ -15,7 +15,9 @@ import javax.annotation.Generated;
  * Transferwarehouse
  */
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @JsonTypeName("transferwarehouse")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-25T16:07:36.701220Z[Etc/UTC]")
 public class Transferwarehouse extends Hop {

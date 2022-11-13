@@ -16,7 +16,9 @@ import javax.annotation.Generated;
 /**
  * HopArrival
  */
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @JsonTypeName("hopArrival")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-25T16:07:36.701220Z[Etc/UTC]")
 public class HopArrival {
