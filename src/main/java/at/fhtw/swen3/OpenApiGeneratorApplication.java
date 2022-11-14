@@ -15,7 +15,7 @@ public class OpenApiGeneratorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(OpenApiGeneratorApplication.class, args);
-        log.info("testing logging with lombok");
+        //log.info("testing logging with lombok");
     }
 
     @Bean
