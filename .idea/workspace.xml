@@ -23,28 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47124745-2c4f-4963-9136-8fe66f7ea90d" name="Changes" comment="Fixing the Programmstruktur">
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/openapi-spring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/openapi-spring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/OpenApiGeneratorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/OpenApiGeneratorApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/ErrorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/ErrorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/GeoCoordinateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/GeoCoordinateRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/HopArrivalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/HopArrivalRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/ParcelRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/ParcelRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/RecipientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/RecipientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/TransferwarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/TransferwarehouseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/TruckRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/TruckRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/WarehouseNextHopsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/WarehouseNextHopsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/WarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/repositories/WarehouseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/OpenApiGeneratorApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/OpenApiGeneratorApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/configuration/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/configuration/HomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/configuration/SpringDocConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/configuration/SpringDocConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/services/impl/ParcelApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/services/impl/ParcelApiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/services/impl/WarehouseApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/at/fhtw/swen3/services/impl/WarehouseApiController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +142,8 @@
       <workItem from="1668373679252" duration="36000" />
       <workItem from="1668373724632" duration="3250000" />
       <workItem from="1668415191236" duration="168000" />
+      <workItem from="1668427215619" duration="628000" />
+      <workItem from="1668526799284" duration="36000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Entities and Mappers">
       <created>1666983447260</created>
@@ -192,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667478049251</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixing the Programmstruktur">
+      <created>1668427241102</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668427241102</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,6 +200,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding Entities and Mappers" />
     <MESSAGE value="Fixing the Programm" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing the Programm" />
+    <MESSAGE value="Fixing the Programmstruktur" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing the Programmstruktur" />
   </component>
 </project>
