@@ -23,7 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47124745-2c4f-4963-9136-8fe66f7ea90d" name="Changes" comment="Fixing the Programmstruktur">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/persistence/DALException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/OpenApiGeneratorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/fhtw/swen3/OpenApiGeneratorApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +95,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="at.fhtw.swen3.gps.service" />
       <recent name="at.fhtw.swen3" />
       <recent name="at.fhtw.swen3.services.impl" />
     </key>
@@ -202,5 +207,9 @@
     <MESSAGE value="Fixing the Programm" />
     <MESSAGE value="Fixing the Programmstruktur" />
     <option name="LAST_COMMIT_MESSAGE" value="Fixing the Programmstruktur" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

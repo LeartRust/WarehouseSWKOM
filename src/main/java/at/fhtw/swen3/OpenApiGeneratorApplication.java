@@ -12,10 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {"org.openapitools", "at.fhtw.swen3.services" , "at.fhtw.swen3.configuration"})
 public class OpenApiGeneratorApplication {
-
+    private static final org.slf4j.Logger loger = org.slf4j.LoggerFactory.getLogger(OpenApiGeneratorApplication.class);
     public static void main(String[] args) {
         SpringApplication.run(OpenApiGeneratorApplication.class, args);
-        //log.info("testing logging with lombok");
+        loger.info("testing logging with lombok");
     }
 
     @Bean
