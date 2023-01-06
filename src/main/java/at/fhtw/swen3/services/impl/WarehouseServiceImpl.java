@@ -1,0 +1,7 @@
+package at.fhtw.swen3.services.impl;
+import at.fhtw.swen3.services.WarehouseService;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class WarehouseServiceImpl implements WarehouseService {
+}

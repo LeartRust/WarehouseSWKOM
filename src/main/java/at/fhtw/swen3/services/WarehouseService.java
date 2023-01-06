@@ -5,5 +5,5 @@ import at.fhtw.swen3.services.dto.Warehouse;
 
 public interface WarehouseService {
 
-    void importWarehouses(Warehouse warehouse) throws BLException;
+    //void importWarehouses(Warehouse warehouse) throws BLException;
 }
