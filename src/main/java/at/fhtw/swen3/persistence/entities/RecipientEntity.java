@@ -28,7 +28,7 @@ public class RecipientEntity {
     //@Pattern(regexp = "", message = ("PostalCode 1Buchstabe + 4Ziffern"))
     private String postalCode;
     //@Column
-    //@Pattern(regexp = "^[A-Z]{1}[A-Za-z-]")
+    @Pattern(regexp = "^[A-Z]{1}[A-Za-z-]*", message = ("City needs to be only letters"))
     private String city;
     //@Column
     private String country;

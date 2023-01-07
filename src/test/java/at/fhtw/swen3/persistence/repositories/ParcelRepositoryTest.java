@@ -28,17 +28,17 @@ public class ParcelRepositoryTest {
         parcelEntity.setState(TrackingInformation.StateEnum.DELIVERED);
 
         RecipientEntity recipientEntity = new RecipientEntity();
-        recipientEntity.setStreet("Landstraße 27a");
+        recipientEntity.setStreet("Landstraße");
         recipientEntity.setCity("Vienna");
         recipientEntity.setPostalCode("A-1210");
-        recipientEntity.setName("Amal");
+        recipientEntity.setName("Leart");
         recipientEntity.setCountry("Austria");
 
         RecipientEntity senderEntity = new RecipientEntity();
         senderEntity.setStreet("Landstraße");
-        senderEntity.setCity("Cairo");
-        senderEntity.setPostalCode("A-5635");
-        senderEntity.setName("Firas");
+        senderEntity.setCity("Prïstina");
+        senderEntity.setPostalCode("A-1321");
+        senderEntity.setName("Marcel");
         senderEntity.setCountry("Egypt");
 
         parcelEntity.setSender(senderEntity);
@@ -53,7 +53,6 @@ public class ParcelRepositoryTest {
         visitedHops.add(hop);
         parcelEntity.setFutureHops(visitedHops);
         parcelEntity.setVisitedHops(visitedHops);
-
         recipientRepository.save(parcelEntity.getRecipient());
         recipientRepository.save(parcelEntity.getSender());
         parcelRepository.save(parcelEntity);
