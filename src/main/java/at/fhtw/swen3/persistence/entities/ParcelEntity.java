@@ -23,10 +23,10 @@ public class ParcelEntity {
     private String trackingId;
     //@Column
     private TrackingInformation.StateEnum state;
-    @OneToMany
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     @NotNull(message ="visitedHops cannot be NULL")
     private List<HopArrivalEntity> visitedHops;
-    @OneToMany
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     @NotNull(message ="futureHops cannot be NULL")
     private List<HopArrivalEntity> futureHops;
     //@Column
