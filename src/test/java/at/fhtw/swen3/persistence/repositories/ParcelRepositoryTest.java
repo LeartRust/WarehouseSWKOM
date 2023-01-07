@@ -35,7 +35,7 @@ public class ParcelRepositoryTest {
         recipientEntity.setCountry("Austria");
 
         RecipientEntity senderEntity = new RecipientEntity();
-        senderEntity.setStreet("Landstraße");
+        senderEntity.setStreet("asdasADsda");
         senderEntity.setCity("Prïstina");
         senderEntity.setPostalCode("A-1321");
         senderEntity.setName("Marcel");
