@@ -13,6 +13,11 @@ jobs:
     name: Unit tests
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
+    #Environmental variables for db connection
+    env:
+      DB_CONNECTION_STRING: ${{ secrets.DATASOURCE_URL }}
+      USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+      PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
     #Job's steps
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
@@ -44,6 +49,11 @@ jobs:
     name: Build
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
+    #Environmental variables for db connection
+    env:
+      DB_CONNECTION_STRING: ${{ secrets.DATASOURCE_URL }}
+      USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+      PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v1
@@ -79,6 +89,11 @@ jobs:
     name: Deploy
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
+    #Environmental variables for db connection
+    env:
+      DB_CONNECTION_STRING: ${{ secrets.DATASOURCE_URL }}
+      USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+      PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
     steps:
       - name: Download JAR
         #Download the artifact which was uploaded in the build's job
