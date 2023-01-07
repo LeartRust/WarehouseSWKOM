@@ -17,18 +17,16 @@ public class RecipientEntity {
     @Column(nullable = false)
     private int id;
     //@Column
-    //@Pattern(regexp = "^[A-Z]{1}[A-Za-z-]")
+    @Pattern(regexp = "^[A-Z]{1}[A-Za-z-]*")
     private String name;
     //@Column
-    //@Pattern(regexp = "^[A-Z]{1}[A-Za-z0-9\\/\\s]")
+    @Pattern(regexp = "^[A-Z]{1}[A-Za-z0-9äöüß\\/\\s]*")
     private String street;
     //@Column
-    //@Pattern(regexp = "^\\b(A-)[0-9]{4}")
-    //TODO Regex laut sprint2
-    //@Pattern(regexp = "", message = ("PostalCode 1Buchstabe + 4Ziffern"))
+    @Pattern(regexp = "^[A-Z]-[0-9]{4}")
     private String postalCode;
     //@Column
-    @Pattern(regexp = "^[A-Z]{1}[A-Za-z-]*", message = ("City needs to be only letters"))
+    @Pattern(regexp = "^[A-Z]{1}[A-Za-z-ï]*")
     private String city;
     //@Column
     private String country;
