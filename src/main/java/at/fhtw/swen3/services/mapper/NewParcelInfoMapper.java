@@ -6,6 +6,6 @@ import org.mapstruct.Mapping;
 
 @Mapper
 public interface NewParcelInfoMapper {
-    @Mapping(source = "newParcelInfo.trackingId", target = "trackingId")
+
     NewParcelInfo from(NewParcelInfo newParcelInfo);
 }

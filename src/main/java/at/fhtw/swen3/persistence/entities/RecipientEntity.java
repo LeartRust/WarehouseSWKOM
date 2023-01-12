@@ -1,7 +1,7 @@
 package at.fhtw.swen3.persistence.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class RecipientEntity {
     //TODO Validation Patterns überprüfen und ausbessern/ ONLY IF AUSTRIA?
 
