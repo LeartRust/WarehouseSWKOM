@@ -1,7 +1,11 @@
 package at.fhtw.swen3.configuration;
+import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import at.fhtw.swen3.persistence.repositories.*;
+import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.impl.ParcelServiceImpl;
 import at.fhtw.swen3.services.impl.WarehouseServiceImpl;
+import at.fhtw.swen3.services.mapper.RecipientMapper;
+import at.fhtw.swen3.services.mapper.RecipientMapperImpl;
 import at.fhtw.swen3.services.validation.EntityValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

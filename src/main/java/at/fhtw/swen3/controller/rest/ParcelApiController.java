@@ -4,6 +4,7 @@ package at.fhtw.swen3.controller.rest;
 import at.fhtw.swen3.controller.ParcelApi;
 import at.fhtw.swen3.persistence.repositories.ParcelRepository;
 import at.fhtw.swen3.persistence.repositories.RecipientRepository;
+import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.impl.ParcelServiceImpl;
@@ -27,6 +28,9 @@ public class ParcelApiController implements ParcelApi {
     private final NativeWebRequest request;
 
     @Autowired
+    private ParcelService parcelService;
+
+    @Autowired
     public ParcelApiController(NativeWebRequest request) {
         this.request = request;
     }
@@ -39,8 +43,7 @@ public class ParcelApiController implements ParcelApi {
     @Override
     public ResponseEntity<NewParcelInfo> submitParcel(Parcel parcel) {
         log.info("submitParcel " + parcel);
-        //final ParcelServiceImpl parcelServiceImpl = new ParcelServiceImpl(ParcelRepository parcelRepository, RecipientRepository recipientRepository, EntityValidator validator);
-        //parcelServiceImpl.submitParcel(parcel);
+        parcelService.submitParcel(parcel);
         return ParcelApi.super.submitParcel(parcel);
     }
 
