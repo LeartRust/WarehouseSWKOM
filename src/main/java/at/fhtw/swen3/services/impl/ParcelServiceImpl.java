@@ -17,6 +17,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.text.html.parser.Entity;
+import java.util.Random;
 
 @Slf4j
 @AllArgsConstructor
@@ -41,20 +42,32 @@ public class ParcelServiceImpl implements ParcelService {
         // TODO make ID unique
         // TODO add gps coordinates
         // generate tracking ID
-        String trackingId = RandomStringUtils.randomAlphabetic(9).toUpperCase();
+        String trackingIdCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 9) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * trackingIdCHARS.length());
+            salt.append(trackingIdCHARS.charAt(index));
+        }
+        String trackingId = salt.toString();
+
+
+
+
+
 
         entity.setTrackingId(trackingId);
         entity.setState(TrackingInformation.StateEnum.PICKUP);
 
         // write to DB
-
+/*
         this.recipientRepository.save(entity.getSender());
         this.recipientRepository.save(entity.getRecipient());
         this.parcelRepository.save(entity);
-
+*/
         NewParcelInfo newParcelInfo = new NewParcelInfo();
-
         newParcelInfo.setTrackingId(trackingId);
+
         log.info("Submit parcel '" + entity + "' with Tracking ID: " + trackingId);
         log.info("Weight: "+entity.getWeight());
 
@@ -71,6 +84,8 @@ public class ParcelServiceImpl implements ParcelService {
         log.info("SENDER Country: "+entity.getSender().getCountry());
         //log.info("Coordinates for parcel: " + geoEncoding.getCoordinates(entity.getRecipient()););
         log.info("Future hops: " + entity.getFutureHops());
+
+        log.info("TRACKING ID: " + trackingId);
 
         return newParcelInfo;
     }

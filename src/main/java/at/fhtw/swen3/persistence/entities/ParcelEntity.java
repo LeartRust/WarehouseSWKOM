@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,7 @@ public class ParcelEntity {
     @Column(nullable = false)
     private int id;
     //@Column
+    @Pattern(regexp = "^[A-Z0-9]{9}$")
     private String trackingId;
     //@Column
     private TrackingInformation.StateEnum state;
