@@ -47,9 +47,10 @@ public class ParcelServiceImpl implements ParcelService {
         entity.setState(TrackingInformation.StateEnum.PICKUP);
 
         // write to DB
-        this.parcelRepository.save(entity);
+
         this.recipientRepository.save(entity.getSender());
         this.recipientRepository.save(entity.getRecipient());
+        this.parcelRepository.save(entity);
 
         NewParcelInfo newParcelInfo = new NewParcelInfo();
 

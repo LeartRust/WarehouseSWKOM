@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="Parcel")
+@Table(name="parcel")
 public class ParcelEntity {
     //TODO ENUM wahrscheinlich falsch
 
@@ -28,10 +28,10 @@ public class ParcelEntity {
     //@Column
     private TrackingInformation.StateEnum state;
     @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
-    @NotNull(message ="visitedHops cannot be NULL")
+    //@NotNull(message ="visitedHops cannot be NULL")
     private List<HopArrivalEntity> visitedHops;
     @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
-    @NotNull(message ="futureHops cannot be NULL")
+    //@NotNull(message ="futureHops cannot be NULL")
     private List<HopArrivalEntity> futureHops;
     //@Column
     @DecimalMin("0.0")
