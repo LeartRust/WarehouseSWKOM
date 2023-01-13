@@ -1,9 +1,12 @@
 package at.fhtw.swen3.controller.rest;
 
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.persistence.repositories.ParcelRepository;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.Criteria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class RestController {
+
+    @Autowired
+    private ParcelRepository parcelRepository;
     @GetMapping("/parcel/status/{trackingId}")
     public String getUsers(@PathVariable("trackingId") String trackingId){
         // logic to fetch users from the database
-        System.out.println("ID dasdasd " + trackingId);
         ObjectMapper mapper = new ObjectMapper();
-        ParcelEntity parcel = ParcelEntity.builder().id(123).state(TrackingInformation.StateEnum.DELIVERED).build();
-        String s = "Test string to json " + trackingId;
+        ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);
+        System.out.println(parcel.getState());
         try {
-            return mapper.writeValueAsString(s);
+            return mapper.writeValueAsString(parcel.getState());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

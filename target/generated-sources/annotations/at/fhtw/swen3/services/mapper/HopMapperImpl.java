@@ -1,30 +1,46 @@
 package at.fhtw.swen3.services.mapper;
 
+import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
+import at.fhtw.swen3.persistence.entities.HopEntity;
+import at.fhtw.swen3.services.dto.GeoCoordinate;
 import at.fhtw.swen3.services.dto.Hop;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-12T18:57:55+0100",
+    date = "2023-01-13T18:38:19+0100",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.1 (Oracle Corporation)"
 )
 public class HopMapperImpl implements HopMapper {
 
     @Override
-    public Hop from(Hop hop) {
-        if ( hop == null ) {
+    public Hop HopEntityToHopDto(HopEntity hopEntity) {
+        if ( hopEntity == null ) {
             return null;
         }
 
-        Hop hop1 = new Hop();
+        Hop hop = new Hop();
 
-        hop1.setHopType( hop.getHopType() );
-        hop1.setCode( hop.getCode() );
-        hop1.setDescription( hop.getDescription() );
-        hop1.setProcessingDelayMins( hop.getProcessingDelayMins() );
-        hop1.setLocationName( hop.getLocationName() );
-        hop1.setLocationCoordinates( hop.getLocationCoordinates() );
+        hop.setHopType( hopEntity.getHopType() );
+        hop.setCode( hopEntity.getCode() );
+        hop.setDescription( hopEntity.getDescription() );
+        hop.setProcessingDelayMins( hopEntity.getProcessingDelayMins() );
+        hop.setLocationName( hopEntity.getLocationName() );
+        hop.setLocationCoordinates( geoCoordinateEntityToGeoCoordinate( hopEntity.getLocationCoordinates() ) );
 
-        return hop1;
+        return hop;
+    }
+
+    protected GeoCoordinate geoCoordinateEntityToGeoCoordinate(GeoCoordinateEntity geoCoordinateEntity) {
+        if ( geoCoordinateEntity == null ) {
+            return null;
+        }
+
+        GeoCoordinate geoCoordinate = new GeoCoordinate();
+
+        geoCoordinate.setLat( geoCoordinateEntity.getLat() );
+        geoCoordinate.setLon( geoCoordinateEntity.getLon() );
+
+        return geoCoordinate;
     }
 }

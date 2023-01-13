@@ -1,17 +1,15 @@
 package at.fhtw.swen3.services.mapper;
 
+import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.services.dto.Hop;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface HopMapper {
-    @Mapping(source = "hop.hopType", target = "hopType")
-    @Mapping(source = "hop.code", target = "code")
-    @Mapping(source = "hop.description", target = "description")
-    @Mapping(source = "hop.processingDelayMins", target = "processingDelayMins")
-    @Mapping(source = "hop.locationName", target = "locationName")
-    @Mapping(source = "hop.locationCoordinates", target = "locationCoordinates")
-    Hop from(Hop hop);
+    HopMapper INSTANCE = Mappers.getMapper(HopMapper.class);
+    @Mapping(source = "hopEntity.hopType", target = "hopType")
+    Hop HopEntityToHopDto(HopEntity hopEntity);
 }

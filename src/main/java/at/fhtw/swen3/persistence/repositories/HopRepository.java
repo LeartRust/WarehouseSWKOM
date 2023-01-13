@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HopRepository extends JpaRepository<HopEntity,Integer> {
+    HopEntity findByCode(String code);
 }
