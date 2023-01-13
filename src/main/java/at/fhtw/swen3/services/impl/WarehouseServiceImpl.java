@@ -1,6 +1,7 @@
 package at.fhtw.swen3.services.impl;
 import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.persistence.entities.WarehouseEntity;
 import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
@@ -22,6 +23,9 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public Hop getWarehouse(String code) throws BLException {
         HopEntity hopEntity = hopRepository.findByCode(code);
+        //if(hopEntity.getHopType().equals("warehouse")){
+            //WarehouseEntity warehouseEntity = warehouseRepository.findbyId(code);
+        //}
 
         if (hopEntity != null){
             log.info("LOGGGG: " + HopMapper.INSTANCE.HopEntityToHopDto(hopEntity).getHopType());

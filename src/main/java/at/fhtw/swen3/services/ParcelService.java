@@ -18,5 +18,7 @@ public interface ParcelService {
 
      void reportParcelDelivery(String trackingId) throws BLException;
 
+    void reportParcelHop(String trackingId, String code) throws BLException;
+
 
 }

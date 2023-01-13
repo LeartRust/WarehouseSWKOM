@@ -16,11 +16,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "at.fhtw.swen3.persistence.repositories"
 })
 public class AppConfig {
+    private final HopArrivalRepository hopArrivalRepository;
+
+    public AppConfig(HopArrivalRepository hopArrivalRepository) {
+        this.hopArrivalRepository = hopArrivalRepository;
+    }
 
     @Bean
     //Validation
-    public ParcelServiceImpl parcelServiceImpl(ParcelRepository parcelRepository, RecipientRepository recipientRepository, EntityValidator validator) {
-        return new ParcelServiceImpl(parcelRepository, recipientRepository, validator);
+    public ParcelServiceImpl parcelServiceImpl(ParcelRepository parcelRepository, RecipientRepository recipientRepository,HopArrivalRepository hopArrivalRepository, HopRepository hopRepository, TransferwarehouseRepository transferwarehouseRepository, EntityValidator validator) {
+        return new ParcelServiceImpl(parcelRepository, recipientRepository, hopArrivalRepository, hopRepository, transferwarehouseRepository,validator);
     }
 
     @Bean

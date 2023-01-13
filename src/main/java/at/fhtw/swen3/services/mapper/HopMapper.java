@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface HopMapper {
     HopMapper INSTANCE = Mappers.getMapper(HopMapper.class);
-    @Mapping(source = "hopEntity.hopType", target = "hopType")
+
+    //@Mapping(source = "hopEntity.hopType", target = "hopType")
     Hop HopEntityToHopDto(HopEntity hopEntity);
 }

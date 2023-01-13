@@ -1,10 +1,11 @@
 package at.fhtw.swen3.services.impl;
 import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.gps.service.impl.GeoCoordinates;
+import at.fhtw.swen3.persistence.entities.HopArrivalEntity;
 import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
-import at.fhtw.swen3.persistence.repositories.ParcelRepository;
-import at.fhtw.swen3.persistence.repositories.RecipientRepository;
+import at.fhtw.swen3.persistence.entities.TransferwarehouseEntity;
+import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
@@ -21,6 +22,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.text.html.parser.Entity;
+import java.util.List;
 import java.util.Random;
 
 @Slf4j
@@ -33,6 +35,12 @@ public class ParcelServiceImpl implements ParcelService {
     private ParcelRepository parcelRepository;
     @Autowired
     private RecipientRepository recipientRepository;
+    @Autowired
+    private HopArrivalRepository hopArrivalRepository;
+    @Autowired
+    private HopRepository hopRepository;
+    @Autowired
+    private TransferwarehouseRepository transferwarehouseRepository;
     private final GeoEncodingService geoEncoding = new GeoCoordinates();
 
     private final EntityValidator validator;
@@ -145,7 +153,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public TrackingInformation trackParcel(String trackingId) throws BLException {
-
+        validator.validate(trackingId);
         ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);
 
         if (parcel != null){
@@ -162,13 +170,67 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public void reportParcelDelivery(String trackingId) throws BLException {
+        validator.validate(trackingId);
         ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);
-
         if (parcel != null){
             parcel.setState(TrackingInformation.StateEnum.DELIVERED);
             parcelRepository.save(parcel);
         }else{
             throw new BLException(2, "Parcel not found, check TrackingId", null);
+        }
+    }
+
+    @Override
+    public void reportParcelHop(String trackingId, String code) throws BLException {
+        log.info("START reportParcelHop");
+        ParcelEntity parcelEntity = parcelRepository.findByTrackingId(trackingId);
+        List< HopArrivalEntity> ListForId = parcelEntity.getFutureHops();
+        Integer arrivalId=null;
+        for (HopArrivalEntity l : ListForId) {
+            if(l.getCode().equals(code)){
+                arrivalId=l.getId();
+            }
+        }
+        log.info("TEST ID: "+arrivalId);
+        HopArrivalEntity hopArrivalEntity = hopArrivalRepository.findByCodeAndId(code, arrivalId);
+        HopEntity hopEntity = hopRepository.findByCode(code);
+        log.info("Hop that is reported: " + hopArrivalEntity);
+        if (parcelEntity != null && hopArrivalEntity != null){
+
+            List< HopArrivalEntity> futureHopsList = parcelEntity.getFutureHops();
+            log.info("futureHopsList before: "+futureHopsList);
+
+            futureHopsList.remove(hopArrivalEntity);
+            log.info("futureHopsList after: "+futureHopsList);
+
+            List< HopArrivalEntity> visitedHopsList = parcelEntity.getVisitedHops();
+            log.info("visitedHopsList before: "+visitedHopsList);
+            visitedHopsList.add(hopArrivalEntity);
+            log.info("visitedHopsList after: "+visitedHopsList);
+
+            switch(hopEntity.getHopType()){
+                case "warehouse":
+                    System.out.println("HopType ist warehouse");
+                    parcelEntity.setState(TrackingInformation.StateEnum.INTRANSPORT);
+                    break;
+                case "truck":
+                    System.out.println("HopType ist truck");
+                    parcelEntity.setState(TrackingInformation.StateEnum.INTRUCKDELIVERY);
+                    break;
+                case "transferwarehouse":
+                    System.out.println("HopType ist transferwarehouse");
+                    TransferwarehouseEntity transferwarehouseEntity = transferwarehouseRepository.findByCode(code);
+                    log.info("partnerUrl: "+ transferwarehouseEntity.getLogisticsPartnerUrl());
+                    //POST https://<partnerUrl>/parcel/<trackingId>
+                    parcelEntity.setState(TrackingInformation.StateEnum.TRANSFERRED);
+                    break;
+                default:
+                    System.out.println("HopType ist ungültig");
+                    break;
+            }
+            parcelRepository.save(parcelEntity);
+        }else{
+            throw new BLException(2, "Parcel and/or Hop not found, check TrackingId/Code", null);
         }
     }
 
