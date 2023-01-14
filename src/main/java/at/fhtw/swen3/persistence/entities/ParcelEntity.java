@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="parcels")
+@Table(name="parcel")
 public class ParcelEntity {
     //TODO ENUM wahrscheinlich falsch
 

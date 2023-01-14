@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name="exceptions")
+@Table(name="error")
 public class ErrorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

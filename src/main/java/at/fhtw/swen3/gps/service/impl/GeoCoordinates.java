@@ -24,8 +24,11 @@ public class GeoCoordinates implements GeoEncodingService {
     public GeoCoordinateEntity getCoordinates(RecipientEntity recipient) throws IOException {
 
         String originalString = recipient.getPostalCode();
-        String[] parts = originalString.split("A-");
-        String postalCode = parts[1];
+        String postalCode = originalString;
+        if(originalString.startsWith("A-")){
+            String[] parts = originalString.split("A-");
+            postalCode = parts[1];
+        }
 
         String address = recipient.getStreet() + " " +  recipient.getCity() + " " + recipient.getCountry() +  " " + postalCode;
         String encodedAddress = URLEncoder.encode(address, "UTF-8");

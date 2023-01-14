@@ -10,4 +10,6 @@ public interface ParcelMapper {
     ParcelMapper INSTANCE = Mappers.getMapper(ParcelMapper.class);
 
     ParcelEntity ParcelDtoToParcelEntity(Parcel parcel);
+
+    Parcel ParcelEntityToParcelDto(ParcelEntity parcelEntity);
 }

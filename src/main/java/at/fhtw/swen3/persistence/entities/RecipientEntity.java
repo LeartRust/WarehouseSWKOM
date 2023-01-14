@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="recipients")
+@Table(name="recipient")
 public class RecipientEntity {
     //TODO Validation Patterns überprüfen und ausbessern/ ONLY IF AUSTRIA?
 

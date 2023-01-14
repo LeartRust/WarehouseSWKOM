@@ -13,6 +13,7 @@ import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.mapper.HopArrivalMapper;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
+import at.fhtw.swen3.services.mapper.TrackingInformationMapper;
 import at.fhtw.swen3.services.validation.EntityValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
@@ -160,13 +161,12 @@ public class ParcelServiceImpl implements ParcelService {
     public TrackingInformation trackParcel(String trackingId) throws BLException {
         validator.validate(trackingId);
         ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);
-
         if (parcel != null){
-
             TrackingInformation tInfo = new TrackingInformation();
             tInfo.setState(parcel.getState());
             tInfo.setFutureHops(HopArrivalMapper.INSTANCE.HopArrivalEntityListToHopArrivalDtoList(parcel.getFutureHops()));
             tInfo.setVisitedHops(HopArrivalMapper.INSTANCE.HopArrivalEntityListToHopArrivalDtoList(parcel.getVisitedHops()));
+
             return tInfo;
         }else{
             BLException exception= new BLException(2, "Parcel not found, check TrackingId", null);
