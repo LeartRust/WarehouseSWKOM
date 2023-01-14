@@ -1,5 +1,6 @@
 package at.fhtw.swen3.gps.service.impl;
 
+import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -12,7 +13,14 @@ class GeoCoordinatesTest {
 
     @Test
     void testGetGeoCoordinates() throws IOException {
-        geo.getCoordinates("1600 Amphitheatre Parkway, Mountain View, CA");
+        RecipientEntity recipient = RecipientEntity.builder()
+                .street("Höchstädtpl. 6")
+                .postalCode("1200")
+                .country("Austria")
+                .city("Wien")
+                .build();
+        System.out.print(recipient);
+        geo.getCoordinates(recipient);
         assertEquals(1, 1);
     }
 

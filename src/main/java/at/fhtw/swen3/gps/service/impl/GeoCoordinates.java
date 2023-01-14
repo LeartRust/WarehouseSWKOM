@@ -1,6 +1,8 @@
 package at.fhtw.swen3.gps.service.impl;
 
 import at.fhtw.swen3.gps.service.GeoEncodingService;
+import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
+import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,10 +20,12 @@ public class GeoCoordinates implements GeoEncodingService {
 
     String format = "&format=json";
 
-    public void getCoordinates(String address) throws IOException {
+    public GeoCoordinateEntity getCoordinates(RecipientEntity recipient) throws IOException {
 
+        String address = recipient.getStreet() + " " +  recipient.getCity() + " " + recipient.getCountry() +  " " +recipient.getPostalCode();
         String encodedAddress = URLEncoder.encode(address, "UTF-8");
         String urlString = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodedAddress + format;
+        System.out.println(encodedAddress);
         // Make the HTTP GET request to the Nominatim API
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -48,8 +52,13 @@ public class GeoCoordinates implements GeoEncodingService {
         System.out.println(lat);
         System.out.println(lon);
 
+        GeoCoordinateEntity geoCoordinates = new GeoCoordinateEntity();
+        geoCoordinates.setLon(lat);
+        geoCoordinates.setLon(lon);
+
         // Print the JSON response
         System.out.println(response.toString());
+        return geoCoordinates;
     }
 
     public String getAddress( String lat, String lon) throws IOException {
