@@ -1,6 +1,7 @@
 package at.fhtw.swen3.configuration;
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import at.fhtw.swen3.persistence.repositories.*;
+import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.impl.ParcelServiceImpl;
 import at.fhtw.swen3.services.impl.WarehouseServiceImpl;
@@ -24,14 +25,14 @@ public class AppConfig {
 
     @Bean
     //Validation
-    public ParcelServiceImpl parcelServiceImpl(ParcelRepository parcelRepository, RecipientRepository recipientRepository,HopArrivalRepository hopArrivalRepository, HopRepository hopRepository, TransferwarehouseRepository transferwarehouseRepository, EntityValidator validator) {
-        return new ParcelServiceImpl(parcelRepository, recipientRepository, hopArrivalRepository, hopRepository, transferwarehouseRepository,validator);
+    public ParcelServiceImpl parcelServiceImpl(ParcelRepository parcelRepository, RecipientRepository recipientRepository,HopArrivalRepository hopArrivalRepository, HopRepository hopRepository, TransferwarehouseRepository transferwarehouseRepository, ErrorRepository errorRepository,EntityValidator validator) {
+        return new ParcelServiceImpl(parcelRepository, recipientRepository, hopArrivalRepository, hopRepository, transferwarehouseRepository, errorRepository,validator);
     }
 
     @Bean
     //Validation
-    public WarehouseServiceImpl warehouseServiceImpl(WarehouseRepository warehouseRepository, WarehouseNextHopsRepository warehouseNextHopsRepository, HopRepository hopRepository, GeoCoordinateRepository geoCoordinateRepository) {
-        return new WarehouseServiceImpl(warehouseRepository, warehouseNextHopsRepository, geoCoordinateRepository, hopRepository);
+    public WarehouseServiceImpl warehouseServiceImpl(WarehouseRepository warehouseRepository, WarehouseNextHopsRepository warehouseNextHopsRepository, HopRepository hopRepository, GeoCoordinateRepository geoCoordinateRepository, ErrorRepository errorRepository,EntityValidator validator) {
+        return new WarehouseServiceImpl(warehouseRepository, warehouseNextHopsRepository, geoCoordinateRepository, hopRepository, errorRepository,validator);
     }
 
 

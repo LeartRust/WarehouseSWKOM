@@ -1,12 +1,18 @@
 package at.fhtw.swen3.services.mapper;
 
+import at.fhtw.swen3.persistence.entities.WarehouseEntity;
+import at.fhtw.swen3.persistence.entities.WarehouseNextHopsEntity;
+import at.fhtw.swen3.services.dto.Warehouse;
 import at.fhtw.swen3.services.dto.WarehouseNextHops;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {HopMapper.class})
 public interface WarehouseNextHopsMapper {
-    @Mapping(source = "warehouseNextHops.traveltimeMins", target = "traveltimeMins")
-    @Mapping(source = "warehouseNextHops.hop", target = "hop")
-    WarehouseNextHops from(WarehouseNextHops warehouseNextHops);
+    WarehouseNextHopsMapper INSTANCE = Mappers.getMapper(WarehouseNextHopsMapper.class);
+
+    WarehouseNextHopsEntity WarehouseNextHopsDtoToWarehouseNextHopsEntity(WarehouseNextHops warehouseNextHops);
+
+    WarehouseNextHops WarehouseNextHopsEntityToWarehouseNextHopsDto(WarehouseNextHopsEntity warehouseNextHopsEntity);
 }

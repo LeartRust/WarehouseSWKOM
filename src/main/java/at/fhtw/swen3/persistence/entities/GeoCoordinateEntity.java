@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name="geoCoordinates")
 public class GeoCoordinateEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(nullable = false)

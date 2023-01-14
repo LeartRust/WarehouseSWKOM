@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="recipient")
+@Table(name="recipients")
 public class RecipientEntity {
     //TODO Validation Patterns überprüfen und ausbessern/ ONLY IF AUSTRIA?
 
@@ -21,7 +21,7 @@ public class RecipientEntity {
     @Column(nullable = false)
     private int id;
     //@Column
-    @Pattern(regexp = "^[A-Z]{1}[A-Za-z-]*")
+    @Pattern(regexp = "^[A-Z]{1}[A-Za-z- ]*")
     private String name;
     //@Column
     @Pattern(regexp = "^[A-Z]{1}[A-Za-z0-9äöüß\\/\\s]*")

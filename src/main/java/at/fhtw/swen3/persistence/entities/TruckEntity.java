@@ -9,7 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-public class TruckEntity {
+@Table(name="trucks")
+public class TruckEntity extends HopEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(nullable = false)
     private int id;

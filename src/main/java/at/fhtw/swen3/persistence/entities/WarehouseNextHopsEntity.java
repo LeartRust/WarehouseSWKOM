@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
+@Table(name="warehouseNextHops")
 public class WarehouseNextHopsEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(nullable = false)

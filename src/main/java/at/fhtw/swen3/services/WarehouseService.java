@@ -6,7 +6,10 @@ import at.fhtw.swen3.services.dto.Warehouse;
 
 public interface WarehouseService {
 
-    //void importWarehouses(Warehouse warehouse) throws BLException;
 
     Hop getWarehouse(String code) throws BLException;
+
+    Void importWarehouses(Warehouse warehouse) throws BLException;
+
+    public Warehouse exportWarehouses() throws BLException;
 }

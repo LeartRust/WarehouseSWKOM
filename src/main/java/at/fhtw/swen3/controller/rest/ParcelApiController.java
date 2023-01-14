@@ -67,7 +67,7 @@ public class ParcelApiController implements ParcelApi {
         try {
             parcelInfo = parcelService.transitionParcel(trackingId, parcel);
         }catch (BLException e){
-            log.error("failed to submit new parcel, check Json" + e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         //return ParcelApi.super.transitionParcel(trackingId, parcel);
@@ -80,7 +80,7 @@ public class ParcelApiController implements ParcelApi {
         try {
             tInfo = parcelService.trackParcel(trackingId);
         }catch (BLException e){
-            log.error("failed to submit new parcel, check Json" + e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -95,7 +95,7 @@ public class ParcelApiController implements ParcelApi {
         try {
            parcelService.reportParcelDelivery(trackingId);
         }catch (BLException e){
-            log.error("failed to submit new parcel, check Json" + e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -110,7 +110,7 @@ public class ParcelApiController implements ParcelApi {
         try {
             parcelService.reportParcelHop(trackingId, code);
         }catch (BLException e){
-            log.error("failed to report Parcel at Hop, check trackingId or hop code" + e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

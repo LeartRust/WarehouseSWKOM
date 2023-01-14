@@ -41,8 +41,13 @@ public class ParcelServiceImpl implements ParcelService {
     private HopRepository hopRepository;
     @Autowired
     private TransferwarehouseRepository transferwarehouseRepository;
+
+    @Autowired
+    private final ErrorRepository errorRepository;
+
     private final GeoEncodingService geoEncoding = new GeoCoordinates();
 
+    @Autowired
     private final EntityValidator validator;
 
     @Override
@@ -145,9 +150,10 @@ public class ParcelServiceImpl implements ParcelService {
             log.info("TRACKING ID: " + trackingId);
             return newParcelInfo;
         } else {
-            //TODO Exception Handling
             log.info("TrackingId already in use. TrackingId: " + trackingId);
-            throw new BLException(1,"trackingId is not unique", null);
+            BLException exception= new BLException(1,"trackingId is not unique", null);
+            errorRepository.save(exception.getErrorEntity());
+            throw exception;
         }
     }
 
@@ -164,7 +170,9 @@ public class ParcelServiceImpl implements ParcelService {
             tInfo.setVisitedHops(HopArrivalMapper.INSTANCE.HopArrivalEntityListToHopArrivalDtoList(parcel.getVisitedHops()));
             return tInfo;
         }else{
-            throw new BLException(2, "Parcel not found, check TrackingId", null);
+            BLException exception= new BLException(2, "Parcel not found, check TrackingId", null);
+            errorRepository.save(exception.getErrorEntity());
+            throw exception;
         }
     }
 
@@ -176,7 +184,9 @@ public class ParcelServiceImpl implements ParcelService {
             parcel.setState(TrackingInformation.StateEnum.DELIVERED);
             parcelRepository.save(parcel);
         }else{
-            throw new BLException(2, "Parcel not found, check TrackingId", null);
+            BLException exception= new BLException(2, "Parcel not found, check TrackingId", null);
+            errorRepository.save(exception.getErrorEntity());
+            throw exception;
         }
     }
 
@@ -222,6 +232,7 @@ public class ParcelServiceImpl implements ParcelService {
                     TransferwarehouseEntity transferwarehouseEntity = transferwarehouseRepository.findByCode(code);
                     log.info("partnerUrl: "+ transferwarehouseEntity.getLogisticsPartnerUrl());
                     //POST https://<partnerUrl>/parcel/<trackingId>
+                    //http://springbootdeploy-env.eba-4vwbis37.us-east-1.elasticbeanstalk.com/swagger-ui/index.html#/parcel/<trackingId>
                     parcelEntity.setState(TrackingInformation.StateEnum.TRANSFERRED);
                     break;
                 default:
@@ -230,7 +241,9 @@ public class ParcelServiceImpl implements ParcelService {
             }
             parcelRepository.save(parcelEntity);
         }else{
-            throw new BLException(2, "Parcel and/or Hop not found, check TrackingId/Code", null);
+            BLException exception= new BLException(2, "Parcel and/or Hop not found, check TrackingId/Code", null);
+            errorRepository.save(exception.getErrorEntity());
+            throw exception;
         }
     }
 

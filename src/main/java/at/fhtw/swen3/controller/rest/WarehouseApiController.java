@@ -46,12 +46,6 @@ public class WarehouseApiController implements WarehouseApi {
     }
 
     @Override
-    public ResponseEntity<Void> importWarehouses(Warehouse warehouse){
-        loger.info("importWarehouses " + warehouse);
-        return WarehouseApi.super.importWarehouses(warehouse);
-    }
-
-    @Override
     public ResponseEntity<Hop> getWarehouse( @Parameter(name = "code", description = "", required = true) @PathVariable("code") String code){
         loger.info("Hop Code: " + code);
         Hop hop;
@@ -60,10 +54,34 @@ public class WarehouseApiController implements WarehouseApi {
             log.info("API TEST: " + hop.getHopType());
             log.info("HopDto: " + hop);
         } catch (BLException e) {
-            log.error("Hop doenst exist, check code" + e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(hop, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> importWarehouses( @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse){
+        loger.info("Warehouse: " + warehouse);
+        try {
+            warehouseService.importWarehouses(warehouse);
+        } catch (BLException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Warehouse> exportWarehouses( ){
+        Warehouse warehouse;
+        try {
+            warehouse=warehouseService.exportWarehouses();
+        } catch (BLException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(warehouse,HttpStatus.OK);
     }
 
 }

@@ -7,10 +7,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {GeoCoordinateMapper.class})
 public interface HopMapper {
     HopMapper INSTANCE = Mappers.getMapper(HopMapper.class);
 
     //@Mapping(source = "hopEntity.hopType", target = "hopType")
     Hop HopEntityToHopDto(HopEntity hopEntity);
+    HopEntity HopDtoToHopEntity(Hop hop);
 }
