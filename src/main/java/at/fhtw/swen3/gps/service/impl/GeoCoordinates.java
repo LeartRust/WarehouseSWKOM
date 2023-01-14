@@ -6,12 +6,13 @@ import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
-
+@Slf4j
 public class GeoCoordinates implements GeoEncodingService {
     //Adressen zu koordinaten
     //https://nominatim.org/release-docs/latest/api/Search/
@@ -22,10 +23,16 @@ public class GeoCoordinates implements GeoEncodingService {
 
     public GeoCoordinateEntity getCoordinates(RecipientEntity recipient) throws IOException {
 
-        String address = recipient.getStreet() + " " +  recipient.getCity() + " " + recipient.getCountry() +  " " +recipient.getPostalCode();
+        String originalString = recipient.getPostalCode();
+        String[] parts = originalString.split("A-");
+        String postalCode = parts[1];
+
+        String address = recipient.getStreet() + " " +  recipient.getCity() + " " + recipient.getCountry() +  " " + postalCode;
         String encodedAddress = URLEncoder.encode(address, "UTF-8");
         String urlString = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodedAddress + format;
         System.out.println(encodedAddress);
+
+        log.info("-----------");
         // Make the HTTP GET request to the Nominatim API
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

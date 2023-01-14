@@ -22,6 +22,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.text.html.parser.Entity;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -59,18 +60,8 @@ public class ParcelServiceImpl implements ParcelService {
 
         // TODO add gps coordinates
         // generate tracking ID
-        String trackingId;
-        String trackingIdCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        do {
-            StringBuilder salt = new StringBuilder();
-            Random rnd = new Random();
-            while (salt.length() < 9) { // length of the random string.
-                int index = (int) (rnd.nextFloat() * trackingIdCHARS.length());
-                salt.append(trackingIdCHARS.charAt(index));
-            }
-            trackingId = salt.toString();
-        }while (parcelRepository.findByTrackingId(trackingId) != null);
 
+        String trackingId = getUniqueTrackingId();
 
         entity.setTrackingId(trackingId);
         entity.setState(TrackingInformation.StateEnum.PICKUP);
@@ -97,7 +88,11 @@ public class ParcelServiceImpl implements ParcelService {
         log.info("SENDER Postalcode: "+entity.getSender().getPostalCode());
         log.info("SENDER City: "+entity.getSender().getCity());
         log.info("SENDER Country: "+entity.getSender().getCountry());
-        //log.info("Coordinates for parcel: " + geoEncoding.getCoordinates(entity.getRecipient()););
+        try {
+            log.info("Coordinates for parcel: " + geoEncoding.getCoordinates(entity.getRecipient()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
         log.info("Future hops: " + entity.getFutureHops());
 
         log.info("TRACKING ID: " + trackingId);
@@ -144,7 +139,11 @@ public class ParcelServiceImpl implements ParcelService {
             log.info("SENDER Postalcode: "+entity.getSender().getPostalCode());
             log.info("SENDER City: "+entity.getSender().getCity());
             log.info("SENDER Country: "+entity.getSender().getCountry());
-            //log.info("Coordinates for parcel: " + geoEncoding.getCoordinates(entity.getRecipient()););
+            try {
+                log.info("Coordinates for parcel: " + geoEncoding.getCoordinates(entity.getRecipient()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             log.info("Future hops: " + entity.getFutureHops());
 
             log.info("TRACKING ID: " + trackingId);
@@ -247,5 +246,20 @@ public class ParcelServiceImpl implements ParcelService {
         }
     }
 
+
+    public String getUniqueTrackingId(){
+        String trackingId;
+        String trackingIdCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        do {
+            StringBuilder salt = new StringBuilder();
+            Random rnd = new Random();
+            while (salt.length() < 9) { // length of the random string.
+                int index = (int) (rnd.nextFloat() * trackingIdCHARS.length());
+                salt.append(trackingIdCHARS.charAt(index));
+            }
+            trackingId = salt.toString();
+        }while (parcelRepository.findByTrackingId(trackingId) != null);
+        return trackingId;
+    }
 
 }
