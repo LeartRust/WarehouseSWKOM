@@ -11,6 +11,7 @@ import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
+@Transactional
 @SpringBootTest
 class ParcelServiceImplTest {
     @Autowired
@@ -60,9 +62,9 @@ class ParcelServiceImplTest {
     @Test
     void trackParcel() throws BLException {
 
-        /*ParcelEntity parcel = getParcelEntityExample(TrackingInformation.StateEnum.PICKUP);
+        ParcelEntity parcel = getParcelEntityExample(TrackingInformation.StateEnum.PICKUP);
         TrackingInformation trackingInfo = parcelService.trackParcel(parcel.getTrackingId());
-        log.info(String.valueOf(trackingInfo));*/
+        log.info(String.valueOf(trackingInfo));
         }
 
     @Test
@@ -75,9 +77,9 @@ class ParcelServiceImplTest {
 
     @Test
     void reportParcelHop() throws BLException{
-       /* ParcelEntity parcelEntity = getParcelEntityExample(TrackingInformation.StateEnum.PICKUP);
-        parcelService.reportParcelHop(parcelEntity.getTrackingId(),"ABCD1234" );
-        */
+       ParcelEntity parcelEntity = getParcelEntityExample(TrackingInformation.StateEnum.PICKUP);
+       parcelService.reportParcelHop(parcelEntity.getTrackingId(),"ABCD1234" );
+
     }
 
     private Parcel getParcelExample(){

@@ -34,11 +34,16 @@ public class WarehouseServiceImpl implements WarehouseService {
     private final HopRepository hopRepository;
 
     @Autowired
-
     private final ErrorRepository errorRepository;
 
     @Autowired
     private final EntityValidator validator;
+    @Autowired
+    private final ParcelRepository parcelRepository;
+    @Autowired
+    private final RecipientRepository recipientRepository;
+    @Autowired
+    private final HopArrivalRepository hopArrivalRepository;
 
     @Override
     public Hop getWarehouse(String code) throws BLException {
@@ -61,8 +66,10 @@ public class WarehouseServiceImpl implements WarehouseService {
     public Void importWarehouses(Warehouse warehouse) throws BLException {
         validator.validate(warehouse);
         WarehouseEntity entity = WarehouseMapper.INSTANCE.WarehouseDtoToWarehouseEntity(warehouse);
-
+        log.info(warehouse.getLocationName());
         if (entity != null){
+            //clear DB
+            clearDb();
             // write to DB
             for (WarehouseNextHopsEntity nhEntity : entity.getNextHops()) {
                 this.geoCoordinateRepository.save(nhEntity.getHop().getLocationCoordinates());
@@ -89,10 +96,21 @@ public class WarehouseServiceImpl implements WarehouseService {
             log.info("Export Warehouse DTO: " + warehouseDto);
             return warehouseDto;
         }else{
-            BLException exception= new BLException(2, "No Wwarehouse found in the Database", null);
+            BLException exception= new BLException(2, "No Warehouse found in the Database", null);
             errorRepository.save(exception.getErrorEntity());
             throw exception;
         }
+    }
+
+
+    private void clearDb(){
+        parcelRepository.deleteAll();
+        warehouseNextHopsRepository.deleteAll();
+        recipientRepository.deleteAll();
+        hopRepository.deleteAll();
+        hopArrivalRepository.deleteAll();
+        geoCoordinateRepository.deleteAll();
+        errorRepository.deleteAll();
     }
 
 }

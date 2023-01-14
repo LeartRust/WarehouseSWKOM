@@ -22,8 +22,9 @@ public class RestController {
 
     @Autowired
     private ParcelRepository parcelRepository;
+
     @GetMapping("/parcel/status/{trackingId}")
-    public String getUsers(@PathVariable("trackingId") String trackingId){
+    public String getUsers(@PathVariable("trackingId") String trackingId) {
         // logic to fetch users from the database
         ObjectMapper mapper = new ObjectMapper();
         ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);

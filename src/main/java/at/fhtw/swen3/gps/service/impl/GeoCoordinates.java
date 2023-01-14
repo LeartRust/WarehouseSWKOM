@@ -33,7 +33,7 @@ public class GeoCoordinates implements GeoEncodingService {
         String address = recipient.getStreet() + " " +  recipient.getCity() + " " + recipient.getCountry() +  " " + postalCode;
         String encodedAddress = URLEncoder.encode(address, "UTF-8");
         String urlString = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodedAddress + format;
-        System.out.println(encodedAddress);
+        log.info(encodedAddress);
 
         log.info("-----------");
         // Make the HTTP GET request to the Nominatim API
@@ -47,7 +47,7 @@ public class GeoCoordinates implements GeoEncodingService {
         StringBuilder response = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
-            System.out.println(inputLine);
+            log.info(inputLine);
         }
         in.close();
 
@@ -59,15 +59,13 @@ public class GeoCoordinates implements GeoEncodingService {
         Double lat = Double.valueOf(element.path("lat").textValue());
         Double lon = Double.valueOf(element.path("lon").textValue());
         System.out.println("-----------");
-        System.out.println(lat);
-        System.out.println(lon);
+        log.info("Lat: " + lat);
+        log.info("Lon: " + lon);
 
         GeoCoordinateEntity geoCoordinates = new GeoCoordinateEntity();
-        geoCoordinates.setLon(lat);
+        geoCoordinates.setLat(lat);
         geoCoordinates.setLon(lon);
-
-        // Print the JSON response
-        System.out.println(response.toString());
+        log.info(geoCoordinates.getLat() + " " + geoCoordinates.getLon());
         return geoCoordinates;
     }
 
