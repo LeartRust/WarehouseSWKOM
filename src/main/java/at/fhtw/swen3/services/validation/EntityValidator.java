@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import javax.validation.*;
 import java.util.Set;
 
-@Component
 @Slf4j
+@Component
 public class EntityValidator {
 
     static ValidatorFactory getValidatorFactory() {

@@ -1,10 +1,12 @@
-package at.fhtw.swen3.persistence.repositories;
+package at.fhtw.swen3;
 
 import at.fhtw.swen3.persistence.entities.*;
-import at.fhtw.swen3.persistence.repositories.ParcelRepository;
-import at.fhtw.swen3.persistence.repositories.RecipientRepository;
+import at.fhtw.swen3.persistence.repositories.*;
+import at.fhtw.swen3.services.dto.Parcel;
+import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.dto.TrackingInformation;
-import org.junit.jupiter.api.Test;
+import at.fhtw.swen3.services.impl.ParcelServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-@SpringBootTest
-@Transactional
-public class ParcelRepositoryTest {
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+@Slf4j
+@Transactional
+@SpringBootTest
+public class BaseTest {
+
+    @Autowired
+    private ParcelServiceImpl parcelService;
     @Autowired
     private ParcelRepository parcelRepository;
 
@@ -24,23 +30,43 @@ public class ParcelRepositoryTest {
     private RecipientRepository recipientRepository;
 
     @Autowired
-    private HopRepository hopRepository;
-
-    @Autowired
     private GeoCoordinateRepository geoCoordinateRepository;
+
     @Autowired
     private WarehouseRepository warehouseRepository;
-    @Autowired
-    private TransferwarehouseRepository transferwarehouseRepository;
 
-    @Test
-    void saveAndDeleteParcelEntity() {
+    @Autowired
+    TransferwarehouseRepository transferwarehouseRepository;
+
+    protected Parcel getParcelExample(){
+        Recipient recipient = new Recipient();
+        recipient.setName("Leart");
+        recipient.setStreet("Höchstädtplatz 6");
+        recipient.setCity("Wien");
+        recipient.setCountry("Austria");
+        recipient.setPostalCode("A-1200");
+
+        Recipient sender = new Recipient();
+        sender.setName("Marcel");
+        sender.setStreet("Franz Jonas Platz");
+        sender.setCity("Wien");
+        sender.setCountry("Austria");
+        sender.setPostalCode("A-1210");
+
+        Parcel parcel = new Parcel();
+        parcel.setSender(sender);
+        parcel.setRecipient(recipient);
+        parcel.setWeight(2.3f);
+        return parcel;
+    }
+
+    protected ParcelEntity getParcelEntityExample(TrackingInformation.StateEnum stateEnum){
 
         ParcelEntity parcelEntity = new ParcelEntity();
-        parcelEntity.setState(TrackingInformation.StateEnum.DELIVERED);
+        parcelEntity.setState(stateEnum);
 
         RecipientEntity recipientEntity = new RecipientEntity();
-        recipientEntity.setStreet("Höchstädtplatz 6");
+        recipientEntity.setStreet("Landstraße");
         recipientEntity.setCity("Vienna");
         recipientEntity.setPostalCode("A-1210");
         recipientEntity.setName("Leart");
@@ -51,20 +77,20 @@ public class ParcelRepositoryTest {
         senderEntity.setCity("Prïstina");
         senderEntity.setPostalCode("A-1321");
         senderEntity.setName("Marcel");
-        senderEntity.setCountry("Kosovo");
+        senderEntity.setCountry("Egypt");
 
         parcelEntity.setSender(senderEntity);
         parcelEntity.setRecipient(recipientEntity);
 
-        parcelEntity.setTrackingId("PYJRB4HZ6");
-        parcelEntity.setWeight(34f);
+        parcelEntity.setTrackingId(parcelService.getUniqueTrackingId());
+        parcelEntity.setWeight(20f);
 
 
         ParcelEntity parcelEntity2 = new ParcelEntity();
         parcelEntity2.setState(TrackingInformation.StateEnum.DELIVERED);
         parcelEntity2.setSender(senderEntity);
         parcelEntity2.setRecipient(recipientEntity);
-        parcelEntity2.setTrackingId("STDRB4HZ7");
+        parcelEntity2.setTrackingId(parcelService.getUniqueTrackingId());
         parcelEntity2.setWeight(34f);
 
 
@@ -86,17 +112,9 @@ public class ParcelRepositoryTest {
 
 
         //TODO Create 1 of each WarehouseEntity, TruckEntity, TransferwarehouseEntity
-        WarehouseEntity warehouseEntity=new WarehouseEntity();
-        warehouseEntity.setHopType("warehouse");
-        warehouseEntity.setCode("ABCD1234");
-        warehouseEntity.setDescription("test description");
-        warehouseEntity.setProcessingDelayMins(5);
-        warehouseEntity.setLocationName("Austria");
-        warehouseEntity.setLevel(1);
+        WarehouseEntity warehouseEntity = getWarehouseEntity();
 
-        List<WarehouseNextHopsEntity> warehouseNextHopsEntityList = new ArrayList<>();
-        //warehouseNextHopsEntityList.add();
-        warehouseEntity.setNextHops(warehouseNextHopsEntityList);
+
 
         /*
         HopEntity hopEnt = new HopEntity();
@@ -107,12 +125,8 @@ public class ParcelRepositoryTest {
         hopEnt.setLocationName("Austria");
          */
         //TODO
-        GeoCoordinateEntity geoEnt = new GeoCoordinateEntity();
-        //geoEnt.setId(2);
-        geoEnt.setLat(48.2391664);
-        geoEnt.setLon(16.3774409);
+        GeoCoordinateEntity geoEnt = getGeoCoordinateEntity();
 
-        warehouseEntity.setLocationCoordinates(geoEnt);
 
         TransferwarehouseEntity hopEnt2 = new TransferwarehouseEntity();
         hopEnt2.setHopType("transferwarehouse");
@@ -139,6 +153,7 @@ public class ParcelRepositoryTest {
         futureHops.add(hop);
         parcelEntity.setFutureHops(futureHops);
 
+        log.info(parcelEntity.getFutureHops().size() + " TESTTTTT");
 
         List<HopArrivalEntity> visitedHops2 = new ArrayList<>();
         visitedHops2.add(hop4);
@@ -154,20 +169,40 @@ public class ParcelRepositoryTest {
         recipientRepository.save(parcelEntity.getSender());
         parcelRepository.save(parcelEntity);
         parcelRepository.save(parcelEntity2);
-
-
         assertEquals(parcelRepository.findById(parcelEntity.getId()).get().getTrackingId(), parcelEntity.getTrackingId());
-        //deleteData();
 
+        return parcelEntity;
     }
 
-    private void deleteData(){
-        parcelRepository.deleteAll();
-        recipientRepository.deleteAll();
-        recipientRepository.deleteAll();
-        transferwarehouseRepository.deleteAll();
-        warehouseRepository.deleteAll();
-        geoCoordinateRepository.deleteAll();
+
+    protected GeoCoordinateEntity getGeoCoordinateEntity(){
+
+        GeoCoordinateEntity geoEnt = new GeoCoordinateEntity();
+        //geoEnt.setId(2);
+        geoEnt.setLat(48.2391664);
+        geoEnt.setLon(16.3774409);
+        return geoEnt;
     }
 
+    protected ErrorEntity getErrorEntity(){
+        ErrorEntity error = ErrorEntity.builder()
+                .errorMessage("Test error message")
+                .build();
+        return error;
+    }
+
+    protected WarehouseEntity getWarehouseEntity(){
+        WarehouseEntity warehouseEntity=new WarehouseEntity();
+        warehouseEntity.setHopType("warehouse");
+        warehouseEntity.setCode("ABCD1234");
+        warehouseEntity.setDescription("test description");
+        warehouseEntity.setProcessingDelayMins(5);
+        warehouseEntity.setLocationName("Austria");
+        warehouseEntity.setLevel(1);
+        warehouseEntity.setLocationCoordinates(getGeoCoordinateEntity());
+        List<WarehouseNextHopsEntity> warehouseNextHopsEntityList = new ArrayList<>();
+        //warehouseNextHopsEntityList.add();
+        warehouseEntity.setNextHops(warehouseNextHopsEntityList);
+        return warehouseEntity;
+    }
 }
