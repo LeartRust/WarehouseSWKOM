@@ -18,22 +18,28 @@ public class HopMapperDeciderImpl implements HopMapper{
 
     @Override
     public Hop HopEntityToHopDto(HopEntity hopEntity){
-        if(hopEntity instanceof WarehouseEntity warehouseEntity){
+        if(hopEntity instanceof WarehouseEntity){
+            WarehouseEntity warehouseEntity = (WarehouseEntity) hopEntity;
             return WarehouseMapper.INSTANCE.WarehouseEntityToWarehouseDto(warehouseEntity);
-        }else if(hopEntity instanceof TruckEntity truckEntity){
+        }else if(hopEntity instanceof TruckEntity){
+            TruckEntity truckEntity = (TruckEntity) hopEntity;
             return TruckMapper.INSTANCE.TruckEntityToTruckDto(truckEntity);
-        }else if(hopEntity instanceof TransferwarehouseEntity transferwarehouseEntity){
+        }else if(hopEntity instanceof TransferwarehouseEntity){
+            TransferwarehouseEntity transferwarehouseEntity = (TransferwarehouseEntity) hopEntity;
             return TransferwarehouseMapper.INSTANCE.TransferwarehouseEntityToTransferwarehouseDto(transferwarehouseEntity);
         }
         return hopMapper.HopEntityToHopDto(hopEntity);
     };
     @Override
     public HopEntity HopDtoToHopEntity(Hop hop){
-        if(hop instanceof Warehouse warehouse){
+        if(hop instanceof Warehouse){
+            Warehouse warehouse = (Warehouse) hop;
             return WarehouseMapper.INSTANCE.WarehouseDtoToWarehouseEntity(warehouse);
-        }else if(hop instanceof Truck truck){
+        }else if(hop instanceof Truck){
+            Truck truck = (Truck) hop;
             return TruckMapper.INSTANCE.TruckDtoToTruckEntity(truck);
-        }else if(hop instanceof Transferwarehouse transferwarehouse){
+        }else if(hop instanceof Transferwarehouse){
+            Transferwarehouse transferwarehouse = (Transferwarehouse) hop;
             return TransferwarehouseMapper.INSTANCE.TransferwarehouseDtoToTransferwarehouseEntity(transferwarehouse);
         }
         return hopMapper.HopDtoToHopEntity(hop);

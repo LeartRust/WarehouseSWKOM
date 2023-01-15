@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WarehouseRepository extends JpaRepository<WarehouseEntity,Integer> {
-        WarehouseEntity findFirstByIdIsNotNullOrderByIdAsc ();
+        WarehouseEntity findFirstByIdIsNotNullOrderByIdDesc ();
 
         WarehouseEntity findByCode(String code);
 }

@@ -94,13 +94,16 @@ public class WarehouseServiceImpl implements WarehouseService {
         log.info("--------------------------------------------------------START saveNextHops--------------------------------------------------------");
         for (WarehouseNextHopsEntity nhEntity : warehouse.getNextHops()) {
             this.geoCoordinateRepository.save(nhEntity.getHop().getLocationCoordinates());
-            if(nhEntity.getHop() instanceof WarehouseEntity warehouseEntity){
+            if(nhEntity.getHop() instanceof WarehouseEntity){
+                WarehouseEntity warehouseEntity = (WarehouseEntity) nhEntity.getHop();
                 log.info("--------------------------------------------------------WAREHOUSE--------------------------------------------------------");
                 saveNextHops(warehouseEntity);
-            }else if(nhEntity.getHop() instanceof TruckEntity truckEntity){
+            }else if(nhEntity.getHop() instanceof TruckEntity){
+                TruckEntity truckEntity = (TruckEntity) nhEntity.getHop();
                 log.info("--------------------------------------------------------TRUCK "+truckEntity.getCode() + "--------------------------------------------------------");
                 this.truckRepository.save(truckEntity);
-            }else if(nhEntity.getHop() instanceof TransferwarehouseEntity transferwarehouseEntity){
+            }else if(nhEntity.getHop() instanceof TransferwarehouseEntity){
+                TransferwarehouseEntity transferwarehouseEntity = (TransferwarehouseEntity) nhEntity.getHop();
                 log.info("--------------------------------------------------------TRANSFERWAREHOUSE--------------------------------------------------------");
                 this.transferwarehouseRepository.save(transferwarehouseEntity);
             }
@@ -118,7 +121,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     public Warehouse exportWarehouses() throws BLException {
         //D. Export a hierarchy of Hops (Warehouse, Truck, TransferWarehouse) objects .
 
-        WarehouseEntity warehouseEntity = warehouseRepository.findFirstByIdIsNotNullOrderByIdAsc();
+        WarehouseEntity warehouseEntity = warehouseRepository.findFirstByIdIsNotNullOrderByIdDesc();
 
 
         if (warehouseEntity != null){
