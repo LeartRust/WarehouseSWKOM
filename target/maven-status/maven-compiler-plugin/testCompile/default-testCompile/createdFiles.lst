@@ -1,0 +1,11 @@
+at\fhtw\swen3\persistence\repositories\GeoCoordinateRepositoryTest.class
+at\fhtw\swen3\BaseTest.class
+at\fhtw\swen3\persistence\repositories\ErrorRepositoryTest.class
+at\fhtw\swen3\persistence\repositories\WarehouseRepositoryTest.class
+at\fhtw\swen3\gps\service\impl\GeoCoordinatesTest.class
+at\fhtw\swen3\persistence\repositories\RecipientRepositoryTest.class
+org\openapitools\OpenApiGeneratorApplicationTests.class
+at\fhtw\swen3\persistence\repositories\ParcelRepositoryTest.class
+at\fhtw\swen3\services\validation\EntityValidationTest.class
+at\fhtw\swen3\services\impl\ParcelServiceImplTest.class
+at\fhtw\swen3\services\impl\WarehouseServiceImplTest.class

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: at.fhtw.swen3.gps.service.impl.GeoCoordinatesTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.039 s - in at.fhtw.swen3.gps.service.impl.GeoCoordinatesTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.046 s - in at.fhtw.swen3.gps.service.impl.GeoCoordinatesTest
