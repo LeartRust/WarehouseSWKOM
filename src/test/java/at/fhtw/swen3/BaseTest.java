@@ -2,6 +2,8 @@ package at.fhtw.swen3;
 
 import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.persistence.repositories.*;
+import at.fhtw.swen3.services.TransferwarehouseService;
+import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.Recipient;
 import at.fhtw.swen3.services.dto.TrackingInformation;
@@ -66,18 +68,18 @@ public class BaseTest {
         parcelEntity.setState(stateEnum);
 
         RecipientEntity recipientEntity = new RecipientEntity();
-        recipientEntity.setStreet("Landstraße");
+        recipientEntity.setStreet("Großfeldsiedlung");
         recipientEntity.setCity("Vienna");
         recipientEntity.setPostalCode("A-1210");
         recipientEntity.setName("Leart");
         recipientEntity.setCountry("Austria");
 
         RecipientEntity senderEntity = new RecipientEntity();
-        senderEntity.setStreet("Landstraße");
+        senderEntity.setStreet("Airport");
         senderEntity.setCity("Prïstina");
         senderEntity.setPostalCode("A-1321");
         senderEntity.setName("Marcel");
-        senderEntity.setCountry("Egypt");
+        senderEntity.setCountry("Kosovo");
 
         parcelEntity.setSender(senderEntity);
         parcelEntity.setRecipient(recipientEntity);
@@ -201,5 +203,51 @@ public class BaseTest {
         //warehouseNextHopsEntityList.add();
         warehouseEntity.setNextHops(warehouseNextHopsEntityList);
         return warehouseEntity;
+    }
+
+    protected RecipientEntity getRecipientEntity(){
+        RecipientEntity recipientEntity = new RecipientEntity();
+        recipientEntity.setStreet("Rathausplatz 1");
+        recipientEntity.setCity("Vienna");
+        recipientEntity.setPostalCode("A-1010");
+        recipientEntity.setName("Leart");
+        recipientEntity.setCountry("Austria");
+        return recipientEntity;
+    }
+
+    protected HopEntity getHopEntity(){
+        HopEntity hopeEntity = new HopEntity();
+        hopeEntity.setHopType("Hop");
+        hopeEntity.setCode("BACD4444");
+        hopeEntity.setDescription("test description 2");
+        hopeEntity.setProcessingDelayMins(5);
+        hopeEntity.setLocationName("Italy");
+        hopeEntity.setLocationCoordinates(getGeoCoordinateEntity());
+        //hopeEntity.setLogisticsPartner("AWS Instanz");
+        return hopeEntity;
+    }
+
+    protected TransferwarehouseEntity getTransferWarehouse(){
+        TransferwarehouseEntity transferwarehouseEntity = new TransferwarehouseEntity();
+        transferwarehouseEntity.setHopType("transferwarehouse");
+        transferwarehouseEntity.setCode("BACD4444");
+        transferwarehouseEntity.setDescription("test description 2");
+        transferwarehouseEntity.setProcessingDelayMins(5);
+        transferwarehouseEntity.setLocationName("Italy");
+        transferwarehouseEntity.setLocationCoordinates(getGeoCoordinateEntity());
+        transferwarehouseEntity.setLogisticsPartner("AWS Instanz");
+        return transferwarehouseEntity;
+    }
+
+    protected TruckEntity getTruckEntity(){
+        TruckEntity truckEntity = new TruckEntity();
+        truckEntity.setNumberPlate("W-121A4");
+        truckEntity.setRegionGeoJson("Random String");
+        truckEntity.setCode("BACD4444");
+        truckEntity.setDescription("test truck description");
+        truckEntity.setProcessingDelayMins(2);
+        truckEntity.setLocationName("Italy");
+        truckEntity.setLocationCoordinates(getGeoCoordinateEntity());
+        return truckEntity;
     }
 }

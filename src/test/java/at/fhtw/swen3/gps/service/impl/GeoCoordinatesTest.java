@@ -33,7 +33,7 @@ class GeoCoordinatesTest {
     void testGetGeoAddress() throws IOException {
         String lat = "37.4217636";
         String lon = "-122.084614";
-        geo.getAddress(lat, lon);
-        assertEquals(1, 1);
+        String  address =  geo.getAddress(lat, lon);
+        assertEquals("Charleston Road 94043 Mountain View United States", address);
     }
 }

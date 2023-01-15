@@ -4,6 +4,7 @@ import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.persistence.entities.GeoCoordinateEntity;
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
 import at.fhtw.swen3.services.dto.GeoCoordinate;
+import at.fhtw.swen3.services.dto.Recipient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +70,7 @@ public class GeoCoordinates implements GeoEncodingService {
         return geoCoordinates;
     }
 
-    public String getAddress( String lat, String lon) throws IOException {
+    public String getAddress(String lat, String lon) throws IOException {
 
         String urlString = "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon +format;
         // Make the HTTP GET request to the Nominatim API
@@ -96,11 +97,18 @@ public class GeoCoordinates implements GeoEncodingService {
         String city = element.path("city").textValue();
         String country = element.path("country").textValue();
 
-        System.out.println(road + " " +postcode + " " +city + " " + country);
+        String address = road + " " +postcode + " " +city + " " + country;
 
         // Print the JSON response
-        System.out.println(response.toString());
-        return "";
+        /*System.out.println(response.toString());
+        Recipient recipient = new Recipient();
+        recipient.setName("test");
+        recipient.setCity(city);
+        recipient.setStreet(road);
+        recipient.setCountry(country);
+        recipient.setPostalCode(postcode);*/
+
+        return address;
     }
 
 
