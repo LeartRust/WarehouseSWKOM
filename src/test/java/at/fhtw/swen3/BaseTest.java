@@ -125,21 +125,18 @@ public class BaseTest {
         hopEnt.setLocationName("Austria");
          */
         //TODO
-        GeoCoordinateEntity geoEnt = getGeoCoordinateEntity();
-
-
         TransferwarehouseEntity hopEnt2 = new TransferwarehouseEntity();
         hopEnt2.setHopType("transferwarehouse");
         hopEnt2.setCode("BACD4444");
         hopEnt2.setDescription("test description 2");
         hopEnt2.setProcessingDelayMins(7);
         hopEnt2.setLocationName("Italy");
-        hopEnt2.setLocationCoordinates(geoEnt);
+        hopEnt2.setLocationCoordinates(warehouseEntity.getLocationCoordinates());
         hopEnt2.setLogisticsPartner("AWS Instanz");
         //TODO Add PartnerUrl from AWS swaggerUI
         //hopEnt2.setLogisticsPartnerUrl();
 
-        geoCoordinateRepository.save(geoEnt);
+        geoCoordinateRepository.save(warehouseEntity.getLocationCoordinates());
 
         warehouseRepository.save(warehouseEntity);
         //hopRepository.save(warehouseEntity);
