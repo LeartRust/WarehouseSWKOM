@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: at.fhtw.swen3.persistence.repositories.ParcelRepositoryTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.547 s - in at.fhtw.swen3.persistence.repositories.ParcelRepositoryTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.546 s - in at.fhtw.swen3.persistence.repositories.ParcelRepositoryTest
