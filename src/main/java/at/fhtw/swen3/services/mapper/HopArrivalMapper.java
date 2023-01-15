@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper
 public interface HopArrivalMapper {
     HopArrivalMapper INSTANCE = Mappers.getMapper(HopArrivalMapper.class);
+
     List<HopArrival> HopArrivalEntityListToHopArrivalDtoList(List<HopArrivalEntity> hopArrivalEntityList);
 
     HopArrival HopArrivalEntityToHopArrivalDto(HopArrivalEntity hopArrivalEntity);

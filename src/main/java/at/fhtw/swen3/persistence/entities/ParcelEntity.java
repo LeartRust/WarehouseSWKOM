@@ -19,8 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 @Table(name="parcel")
 public class ParcelEntity {
-    //TODO ENUM wahrscheinlich falsch
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(nullable = false)
     private int id;

@@ -19,7 +19,7 @@ public class OpenApiGeneratorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(OpenApiGeneratorApplication.class, args);
-        log.info("LOMBOK LOG TEST");
+        log.info("PROGRAM RUNNING");
     }
 
     @Bean

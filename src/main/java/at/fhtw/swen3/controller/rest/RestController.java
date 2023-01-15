@@ -5,6 +5,7 @@ import at.fhtw.swen3.persistence.repositories.ParcelRepository;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @org.springframework.web.bind.annotation.RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
@@ -28,7 +30,7 @@ public class RestController {
         // logic to fetch users from the database
         ObjectMapper mapper = new ObjectMapper();
         ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);
-        System.out.println(parcel.getState());
+        log.info("State of Parcel: " + parcel.getState());
         try {
             return mapper.writeValueAsString(parcel.getState());
         } catch (JsonProcessingException e) {

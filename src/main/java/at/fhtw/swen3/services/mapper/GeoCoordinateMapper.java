@@ -12,7 +12,6 @@ import org.mapstruct.factory.Mappers;
 public interface GeoCoordinateMapper {
     GeoCoordinateMapper INSTANCE = Mappers.getMapper(GeoCoordinateMapper.class);
 
-    //@Mapping(source = "hopEntity.hopType", target = "hopType")
     GeoCoordinateEntity GeoCoordinateDtoToGeoCoordinateEntity(GeoCoordinate geoCoordinate);
 
     GeoCoordinate GeoCoordinateEntityToGeoCoordinateDto(GeoCoordinateEntity geoCoordinateEntity);

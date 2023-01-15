@@ -1,4 +1,5 @@
 package at.fhtw.swen3.services.impl;
+
 import at.fhtw.swen3.gps.service.GeoEncodingService;
 import at.fhtw.swen3.gps.service.impl.GeoCoordinates;
 import at.fhtw.swen3.persistence.entities.HopArrivalEntity;
@@ -13,26 +14,19 @@ import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.mapper.HopArrivalMapper;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
-import at.fhtw.swen3.services.mapper.TrackingInformationMapper;
 import at.fhtw.swen3.services.validation.EntityValidator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Slf4j
 @AllArgsConstructor
 public class ParcelServiceImpl implements ParcelService {
-
-    //TODO DB funktionen + validation, tracking id generieren
-
     @Autowired
     private ParcelRepository parcelRepository;
     @Autowired
@@ -54,18 +48,19 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public NewParcelInfo submitParcel(Parcel parcel) {
+        //A. Submit a new parcel to the logistics service.
+        //TODO Predict FutureHops
+
         log.info("START OF submitParcel");
 
         validator.validate(parcel);
         ParcelEntity entity = ParcelMapper.INSTANCE.ParcelDtoToParcelEntity(parcel);
 
-        // TODO add gps coordinates
-        // generate tracking ID
-
         String trackingId = getUniqueTrackingId();
 
         entity.setTrackingId(trackingId);
         entity.setState(TrackingInformation.StateEnum.PICKUP);
+
 
         // write to DB
         this.recipientRepository.save(entity.getSender());
@@ -99,20 +94,17 @@ public class ParcelServiceImpl implements ParcelService {
         log.info("TRACKING ID: " + trackingId);
 
         return newParcelInfo;
-
-
     }
 
 
     @Override
     public NewParcelInfo transitionParcel(String trackingId, Parcel parcel) throws BLException {
+        //B. Transfer an existing parcel from the service of a logistics partner
+        //TODO Braucht diese Methode auch Predict FutureHops?
+
         log.info("START OF transitionParcel");
         validator.validate(parcel);
         ParcelEntity entity = ParcelMapper.INSTANCE.ParcelDtoToParcelEntity(parcel);
-
-
-        // TODO add gps coordinates
-        // generate tracking ID
 
         if (parcelRepository.findByTrackingId(trackingId) == null){
             entity.setTrackingId(trackingId);
@@ -159,6 +151,8 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public TrackingInformation trackParcel(String trackingId) throws BLException {
+        //H. Track a parcel
+
         validator.validate(trackingId);
         ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);
         if (parcel != null){
@@ -177,6 +171,8 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public void reportParcelDelivery(String trackingId) throws BLException {
+        //G. Report Parcel delivery at final address.
+
         validator.validate(trackingId);
         ParcelEntity parcel = parcelRepository.findByTrackingId(trackingId);
         if (parcel != null){
@@ -191,16 +187,21 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public void reportParcelHop(String trackingId, String code) throws BLException {
+        //F. Report Parcel arrival at hop
+
         log.info("START reportParcelHop");
+        //Search for Parcel with trackingId
         ParcelEntity parcelEntity = parcelRepository.findByTrackingId(trackingId);
         List< HopArrivalEntity> ListForId = parcelEntity.getFutureHops();
         Integer arrivalId=null;
+        //Search for HopArrivalEntity from FutureHops List with Code
         for (HopArrivalEntity l : ListForId) {
             if(l.getCode().equals(code)){
                 arrivalId=l.getId();
             }
         }
         log.info("TEST ID: "+arrivalId);
+        //Get HopArrivalEntity with arrivalId from Database
         HopArrivalEntity hopArrivalEntity = hopArrivalRepository.findByCodeAndId(code, arrivalId);
         HopEntity hopEntity = hopRepository.findByCode(code);
         log.info("Hop that is reported: " + hopArrivalEntity);
@@ -219,15 +220,16 @@ public class ParcelServiceImpl implements ParcelService {
 
             switch(hopEntity.getHopType()){
                 case "warehouse":
-                    System.out.println("HopType ist warehouse");
+                    log.info("HopType ist warehouse");
                     parcelEntity.setState(TrackingInformation.StateEnum.INTRANSPORT);
                     break;
                 case "truck":
-                    System.out.println("HopType ist truck");
+                    log.info("HopType ist truck");
                     parcelEntity.setState(TrackingInformation.StateEnum.INTRUCKDELIVERY);
                     break;
                 case "transferwarehouse":
-                    System.out.println("HopType ist transferwarehouse");
+                    //TODO Verknüpfung mit der Url einbauen
+                    log.info("HopType ist transferwarehouse");
                     TransferwarehouseEntity transferwarehouseEntity = transferwarehouseRepository.findByCode(code);
                     log.info("partnerUrl: "+ transferwarehouseEntity.getLogisticsPartnerUrl());
                     //POST https://<partnerUrl>/parcel/<trackingId>
@@ -235,7 +237,7 @@ public class ParcelServiceImpl implements ParcelService {
                     parcelEntity.setState(TrackingInformation.StateEnum.TRANSFERRED);
                     break;
                 default:
-                    System.out.println("HopType ist ungültig");
+                    log.info("HopType ist ungültig");
                     break;
             }
             parcelRepository.save(parcelEntity);
@@ -248,6 +250,7 @@ public class ParcelServiceImpl implements ParcelService {
 
 
     public String getUniqueTrackingId(){
+        //Creates Unique Tracking Id
         String trackingId;
         String trackingIdCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         do {

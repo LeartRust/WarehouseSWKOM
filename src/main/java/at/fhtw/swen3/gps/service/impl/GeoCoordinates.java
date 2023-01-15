@@ -59,7 +59,7 @@ public class GeoCoordinates implements GeoEncodingService {
 
         Double lat = Double.valueOf(element.path("lat").textValue());
         Double lon = Double.valueOf(element.path("lon").textValue());
-        System.out.println("-----------");
+        log.info("-----------");
         log.info("Lat: " + lat);
         log.info("Lon: " + lon);
 

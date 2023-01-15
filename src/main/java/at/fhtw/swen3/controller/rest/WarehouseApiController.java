@@ -1,15 +1,13 @@
 package at.fhtw.swen3.controller.rest;
 
 
-import at.fhtw.swen3.OpenApiGeneratorApplication;
 import at.fhtw.swen3.controller.WarehouseApi;
 import at.fhtw.swen3.services.BLException;
-import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.Warehouse;
-import at.fhtw.swen3.services.impl.WarehouseServiceImpl;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.NativeWebRequest;
 
-import java.util.Optional;
 import javax.annotation.Generated;
 import javax.validation.Valid;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
 
 @Slf4j
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-09-25T16:07:36.701220Z[Etc/UTC]")
@@ -47,6 +43,7 @@ public class WarehouseApiController implements WarehouseApi {
 
     @Override
     public ResponseEntity<Hop> getWarehouse( @Parameter(name = "code", description = "", required = true) @PathVariable("code") String code){
+        //E. Get a Hop (Warehouse, Truck, TransferWarehouse) by code
         loger.info("Hop Code: " + code);
         Hop hop;
         try {
@@ -62,6 +59,7 @@ public class WarehouseApiController implements WarehouseApi {
 
     @Override
     public ResponseEntity<Void> importWarehouses( @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse){
+        //C. Import a hierarchy of Hops (Warehouse, Truck, TransferWarehouse) objects.
         loger.info("Warehouse: " + warehouse);
         try {
             warehouseService.importWarehouses(warehouse);
@@ -74,6 +72,7 @@ public class WarehouseApiController implements WarehouseApi {
 
     @Override
     public ResponseEntity<Warehouse> exportWarehouses( ){
+        //D. Export a hierarchy of Hops (Warehouse, Truck, TransferWarehouse) objects .
         Warehouse warehouse;
         try {
             warehouse=warehouseService.exportWarehouses();

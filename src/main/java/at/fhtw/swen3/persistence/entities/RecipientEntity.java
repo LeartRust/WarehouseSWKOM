@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 @Table(name="recipient")
 public class RecipientEntity {
-    //TODO Validation Patterns überprüfen und ausbessern/ ONLY IF AUSTRIA?
+    //TODO Validation / ONLY IF AUSTRIA?
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(nullable = false)

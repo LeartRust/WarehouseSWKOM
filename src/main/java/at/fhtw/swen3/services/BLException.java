@@ -24,12 +24,4 @@ public class BLException extends Exception {
         return errorEntity.getErrorMessage();
     }
 
-
-    /*
-    @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class })
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request){
-        String bodyOfResponse = "this should be application specific";
-        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
-    }
-     */
 }
