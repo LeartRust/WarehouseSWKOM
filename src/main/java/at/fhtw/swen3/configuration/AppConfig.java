@@ -31,8 +31,8 @@ public class AppConfig {
 
     @Bean
     //Validation
-    public WarehouseServiceImpl warehouseServiceImpl(WarehouseRepository warehouseRepository, WarehouseNextHopsRepository warehouseNextHopsRepository, HopRepository hopRepository, GeoCoordinateRepository geoCoordinateRepository, ErrorRepository errorRepository,EntityValidator validator, ParcelRepository parcelRepository, RecipientRepository recipientRepository, HopArrivalRepository hopArrivalRepository) {
-        return new WarehouseServiceImpl(warehouseRepository, warehouseNextHopsRepository, geoCoordinateRepository, hopRepository, errorRepository,validator, parcelRepository, recipientRepository, hopArrivalRepository);
+    public WarehouseServiceImpl warehouseServiceImpl(WarehouseRepository warehouseRepository, TruckRepository truckRepository, TransferwarehouseRepository transferwarehouseRepository,WarehouseNextHopsRepository warehouseNextHopsRepository, HopRepository hopRepository, GeoCoordinateRepository geoCoordinateRepository, ErrorRepository errorRepository,EntityValidator validator, ParcelRepository parcelRepository, RecipientRepository recipientRepository, HopArrivalRepository hopArrivalRepository) {
+        return new WarehouseServiceImpl(warehouseRepository, truckRepository, transferwarehouseRepository,warehouseNextHopsRepository, geoCoordinateRepository, hopRepository, errorRepository,validator, parcelRepository, recipientRepository, hopArrivalRepository);
     }
 
 

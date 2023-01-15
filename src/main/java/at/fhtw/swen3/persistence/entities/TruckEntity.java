@@ -9,12 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name="truck")
+//@Table(name="truck")
 public class TruckEntity extends HopEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(nullable = false)
     private int id;
-    //@Column
+    @Column(columnDefinition="text")
     private String regionGeoJson;
     //@Column
     private String numberPlate;

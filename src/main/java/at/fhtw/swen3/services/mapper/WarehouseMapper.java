@@ -23,5 +23,7 @@ public interface WarehouseMapper {
 
     Warehouse WarehouseEntityToWarehouseDto(WarehouseEntity warehouseEntity);
 
+    Warehouse HopDtoToWarehouseDto(Hop Hop);
+
 
 }

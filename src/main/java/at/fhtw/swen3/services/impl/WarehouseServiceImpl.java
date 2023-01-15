@@ -3,17 +3,17 @@ import at.fhtw.swen3.persistence.entities.*;
 import at.fhtw.swen3.persistence.repositories.*;
 import at.fhtw.swen3.services.BLException;
 import at.fhtw.swen3.services.WarehouseService;
-import at.fhtw.swen3.services.dto.Hop;
-import at.fhtw.swen3.services.dto.TrackingInformation;
-import at.fhtw.swen3.services.dto.Warehouse;
-import at.fhtw.swen3.services.mapper.HopMapper;
-import at.fhtw.swen3.services.mapper.ParcelMapper;
-import at.fhtw.swen3.services.mapper.WarehouseMapper;
+import at.fhtw.swen3.services.dto.*;
+import at.fhtw.swen3.services.mapper.*;
 import at.fhtw.swen3.services.validation.EntityValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +23,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Autowired
     private final WarehouseRepository warehouseRepository;
+
+    @Autowired
+    private final TruckRepository truckRepository;
+
+    @Autowired
+    private final TransferwarehouseRepository transferwarehouseRepository;
 
     @Autowired
     private final WarehouseNextHopsRepository warehouseNextHopsRepository;
@@ -66,16 +72,17 @@ public class WarehouseServiceImpl implements WarehouseService {
     public Void importWarehouses(Warehouse warehouse) throws BLException {
         validator.validate(warehouse);
         WarehouseEntity entity = WarehouseMapper.INSTANCE.WarehouseDtoToWarehouseEntity(warehouse);
-        log.info(warehouse.getLocationName());
+        log.info(""+entity);
+        log.info("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        log.info(""+ WarehouseMapper.INSTANCE.WarehouseEntityToWarehouseDto(entity));
+        log.info("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         if (entity != null){
             //clear DB
             clearDb();
             // write to DB
-            for (WarehouseNextHopsEntity nhEntity : entity.getNextHops()) {
-                this.geoCoordinateRepository.save(nhEntity.getHop().getLocationCoordinates());
-                this.hopRepository.save(nhEntity.getHop());
-                this.warehouseNextHopsRepository.save(nhEntity);
-            }
+            log.info("--------------------------------------------------------START--------------------------------------------------------");
+            saveNextHops(entity);
+            log.info("--------------------------------------------------------END--------------------------------------------------------");
             this.geoCoordinateRepository.save(entity.getLocationCoordinates());
             this.warehouseRepository.save(entity);
         }else{
@@ -87,12 +94,37 @@ public class WarehouseServiceImpl implements WarehouseService {
         return null;
     }
 
+    private void saveNextHops(WarehouseEntity warehouse) {
+        log.info("--------------------------------------------------------START saveNextHops--------------------------------------------------------");
+        for (WarehouseNextHopsEntity nhEntity : warehouse.getNextHops()) {
+            this.geoCoordinateRepository.save(nhEntity.getHop().getLocationCoordinates());
+            if(nhEntity.getHop() instanceof WarehouseEntity warehouseEntity){
+                log.info("--------------------------------------------------------WAREHOUSE--------------------------------------------------------");
+                saveNextHops(warehouseEntity);
+            }else if(nhEntity.getHop() instanceof TruckEntity truckEntity){
+                log.info("--------------------------------------------------------TRUCK "+truckEntity.getCode() + "--------------------------------------------------------");
+                this.truckRepository.save(truckEntity);
+            }else if(nhEntity.getHop() instanceof TransferwarehouseEntity transferwarehouseEntity){
+                log.info("--------------------------------------------------------TRANFERWAREHOUSE--------------------------------------------------------");
+                this.transferwarehouseRepository.save(transferwarehouseEntity);
+            }
+            this.hopRepository.save(nhEntity.getHop());
+            this.warehouseNextHopsRepository.save(nhEntity);
+        }
+        log.info("--------------------------------------------------------END FOR--------------------------------------------------------");
+        this.geoCoordinateRepository.save(warehouse.getLocationCoordinates());
+        this.warehouseRepository.save(warehouse);
+        log.info("--------------------------------------------------------END saveNextHops--------------------------------------------------------");
+
+    }
+
     @Override
     public Warehouse exportWarehouses() throws BLException {
         WarehouseEntity warehouseEntity = warehouseRepository.findFirstByIdIsNotNullOrderByIdAsc();
 
-        Warehouse warehouseDto = WarehouseMapper.INSTANCE.WarehouseEntityToWarehouseDto(warehouseEntity);
+
         if (warehouseEntity != null){
+            Warehouse warehouseDto = WarehouseMapper.INSTANCE.WarehouseEntityToWarehouseDto(warehouseEntity);
             log.info("Export Warehouse DTO: " + warehouseDto);
             return warehouseDto;
         }else{
@@ -104,13 +136,19 @@ public class WarehouseServiceImpl implements WarehouseService {
 
 
     private void clearDb(){
-        parcelRepository.deleteAll();
+
+        //need to manually "delete from hop_next_hops;" WHY?
         warehouseNextHopsRepository.deleteAll();
-        recipientRepository.deleteAll();
         hopRepository.deleteAll();
-        hopArrivalRepository.deleteAll();
-        geoCoordinateRepository.deleteAll();
         errorRepository.deleteAll();
+        geoCoordinateRepository.deleteAll();
+        hopArrivalRepository.deleteAll();
+        parcelRepository.deleteAll();
+        recipientRepository.deleteAll();
+        transferwarehouseRepository.deleteAll();
+        truckRepository.deleteAll();
+        warehouseRepository.deleteAll();
+
     }
 
 }
